@@ -1,4 +1,4 @@
-package _003;
+package medium._003;
 
 import java.util.HashSet;
 

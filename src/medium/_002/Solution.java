@@ -1,4 +1,4 @@
-package _002;
+package medium._002;
 
 public class Solution {
     /**
