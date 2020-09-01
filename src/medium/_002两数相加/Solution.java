@@ -1,4 +1,4 @@
-package medium._002;
+package medium._002两数相加;
 
 public class Solution {
     /**
@@ -20,10 +20,6 @@ public class Solution {
 
     //对于链表问题，返回结果为头结点时，通常需要先初始化一个预先指针 pre，该指针的下一个节点指向真正的头结点head。使用预先指针的目的在于链表初始化时无可用节点值，而且链表构造过程需要指针移动，进而会导致头指针丢失，无法返回结果。
     //
-    //作者：guanpengchn
-    //链接：https://leetcode-cn.com/problems/add-two-numbers/solution/hua-jie-suan-fa-2-liang-shu-xiang-jia-by-guanpengc/
-    //来源：力扣（LeetCode）
-    //著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode root = new ListNode(0);
         ListNode cursor = root;

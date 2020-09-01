@@ -1,4 +1,4 @@
-package easy._001;
+package easy._001两数之和;
 
 import java.util.Arrays;
 import java.util.HashMap;
