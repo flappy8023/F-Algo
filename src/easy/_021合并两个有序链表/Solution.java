@@ -2,12 +2,12 @@ package easy._021合并两个有序链表;
 
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * public class common.ListNode {
  * int val;
- * ListNode next;
- * ListNode() {}
- * ListNode(int val) { this.val = val; }
- * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * common.ListNode next;
+ * common.ListNode() {}
+ * common.ListNode(int val) { this.val = val; }
+ * common.ListNode(int val, common.ListNode next) { this.val = val; this.next = next; }
  * }
  */
 class Solution {

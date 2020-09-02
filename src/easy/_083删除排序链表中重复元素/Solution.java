@@ -5,10 +5,10 @@ package easy._083删除排序链表中重复元素;
         输出: 1->2*/
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * public class common.ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
+ *     common.ListNode next;
+ *     common.ListNode(int x) { val = x; }
  * }
  */
 class Solution {

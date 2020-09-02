@@ -5,10 +5,10 @@ import java.util.Set;
 
 /**
  * Definition for singly-linked list.
- * class ListNode {
+ * class common.ListNode {
  * int val;
- * ListNode next;
- * ListNode(int x) {
+ * common.ListNode next;
+ * common.ListNode(int x) {
  * val = x;
  * next = null;
  * }
