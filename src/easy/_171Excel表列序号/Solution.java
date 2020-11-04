@@ -34,6 +34,14 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Solution().titleToNumber("ZY"));
+        System.out.println(new Solution().titleToNumber1("ZY"));
+    }
+    public int titleToNumber1(String s){
+        int ans = 0;
+        for(int i=0;i<s.length();i++){
+            int num = s.charAt(i)-'A'+1;
+            ans = ans*26+num;
+        }
+        return ans;
     }
 }
