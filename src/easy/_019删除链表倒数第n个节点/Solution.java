@@ -10,6 +10,7 @@ import common.ListNode;
 
         当删除了倒数第二个节点后，链表变为 1->2->3->5.*/
 public class Solution {
+    //dev commit
     public ListNode removeNthFromEnd(ListNode head, int n) {
         //建立哑节点，用于解决极端情况，如只有一个节点或者要删除第一个节点
         ListNode dummy = new ListNode(0);
