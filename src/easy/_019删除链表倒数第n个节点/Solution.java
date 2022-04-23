@@ -22,7 +22,7 @@ public class Solution {
             length++;
             cursor = cursor.next;
         }
-        cursor = dummy;
+        cursor = dummy;//dev在rebas之前做修改，未提交
         //计算正序的元素位置
         int abN = length - n;
         for (int i = 0; i < abN; i++) {
