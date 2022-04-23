@@ -24,7 +24,7 @@ class Solution {
                 cursor.next = l2;
                 l2 = l2.next;
             } else if (l2 == null) {
-                cursor.next = l1;
+                cursor.next = l1;//mastersss
                 l1 = l1.next;
             } else if (l1.val >= l2.val) {
                 cursor.next = l2;
