@@ -40,7 +40,7 @@ public class Solution {
         if (n == 1) {
             return "1";
         }
-
+        //master commit
         String item = countAndSay(n - 1);
         int first = 0;
         int count = 1;
