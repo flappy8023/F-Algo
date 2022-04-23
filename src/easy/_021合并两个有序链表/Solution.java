@@ -13,7 +13,7 @@ package easy._021合并两个有序链表;
 class Solution {
     /**迭代
      * @param l1
-     * @param l2
+     * @param l2 master commit2
      * @return
      */
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
