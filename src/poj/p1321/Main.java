@@ -10,82 +10,52 @@ import java.util.Scanner;
  * @createTime 2023年05月16日 09:26:00
  */
 public class Main {
+    static int count = 0;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()) {
             int n = scanner.nextInt();
             int k = scanner.nextInt();
             if (-1 == n && -1 == k) return;
-            String[][] chess = new String[n][n];
-
-            int index = 0;
+            char[][] chess = new char[n][n];
+            boolean[][] visit = new boolean[n][n];
+            count = 0;
             for (int i = 0; i < n; i++) {
-                String line = scanner.next();
-                String[] letters = line.split(" ");
+                char[] letters = scanner.next().toCharArray();
                 for (int j = 0; j < letters.length; j++) {
                     chess[i][j] = letters[j];
-                    if ("#".equals(chess[i][j])) {
-                        index++;
-                    }
                 }
             }
-            Point[] points = new Point[index];
-            int in = 0;
-            for (int i = 0; i < chess.length; i++) {
-                for (int j = 0; j < chess[0].length; j++) {
-                    if ("#".equals(chess[i][j])) {
-                        points[in++] = new Point(i, j);
-                    }
-                }
-            }
-            int count = 0;
-            Point[] result = new Point[k];
-            dfs(chess, points, count, 0, k, 0, result);
-
-        }
-    }
-
-    private static void dfs(String[][] chess, Point[] points, int count, int index/*这步下第index个格子*/, int k, int step/*下了step个棋子*/, Point[] result) {
-        if (step == k) {
-            //排列中没有相同横纵坐标才记录
-            if (check(result, 0)) {
-                count++;
-            }
-            return;
-        }
-        if (points.length == index) {
+            dfs(0, chess, k, visit);
             System.out.println(count);
-            return;
         }
 
-        for (int i = index; i < points.length; i++) {
-            result[step] = points[index];
-            dfs(chess, points, count, i + 1, k, step + 1, result);
-            result[step] = null;
-        }
     }
 
-    private static boolean check(Point[] res, int start) {
-        if (start == res.length) {
-            return true;
-        }
-        for (int i = start; i < res.length - 1; i++) {
-            Point p = res[start];
-            if (res[i + 1] == null) return true;
-            if (p.x == res[i + 1].x || p.y == res[i + 1].y) return false;
-            return check(res, i);
-
+    private static boolean isOk(int r, int c, boolean[][] visit) {
+        for (int i = 0; i < visit.length; i++) {
+            if (visit[i][c]) return false;
         }
         return true;
     }
 
-    static class Point {
-        int x;
-        int y;
-
-        public Point(int x, int y) {
-            this.x = x;
-            this.y = y;
+    private static void dfs(int i, char[][] chess, int k, boolean[][] visit) {
+        if (k == 0) {
+            count++;
+            return;
         }
+        if(i>=chess.length)return;
+        //第i行放一个棋子
+        for (int j = 0; j < chess[i].length; j++) {
+            if ('#' == chess[i][j] && isOk(i, j, visit)) {
+                visit[i][j] = true;
+                dfs(i + 1, chess, k - 1, visit);
+                visit[i][j] = false;
+            }
+        }
+        //不放
+        dfs(i + 1, chess, k, visit);
+
     }
 }
