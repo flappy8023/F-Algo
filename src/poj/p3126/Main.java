@@ -1,5 +1,6 @@
 package poj.p3126;
 
+import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -13,6 +14,7 @@ import java.util.Scanner;
  */
 public class Main {
     static int min = Integer.MAX_VALUE;
+    static boolean[] primes = null;
 
     static class Move {
         int step;
@@ -26,6 +28,7 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        primes = generatePrimes();
         int cases = scanner.nextInt();
         for (int i = 0; i < cases; i++) {
             min = Integer.MAX_VALUE;
@@ -50,6 +53,7 @@ public class Main {
         visit[num] = true;
         while (head < tail) {
             Move move = moves[head++];
+
             if (move.value == target) {
                 min = move.step;
                 return;
@@ -104,20 +108,36 @@ public class Main {
 
 
     private static boolean isPrime(int num) {
-        if (num <= 1) {
-            return false;
-        } else if (num == 2) {
-            return true;
-        } else if (num % 2 == 0) {
-            return true;
-        } else {
-            for (int i = 3; i < num; i++) {
-                if (num % i == 0) {
-                    return false;
-                }
+//        if (num <= 1) {
+//            return false;
+//        } else if (num == 2) {
+//            return true;
+//        } else if (num % 2 == 0) {
+//            return true;
+//        } else {
+//            for (int i = 3; i < num; i++) {
+//                if (num % i == 0) {
+//                    return false;
+//                }
+//
+//            }
+//        }
+//        return true;
+        return primes[num];
+    }
 
+    private static boolean[] generatePrimes() {
+        boolean[] primes = new boolean[10000];
+        for (int i = 2; i < 10000; i++) {
+            boolean isPrime = true;
+            for (int j = 2; j <i; j++) {
+                if (i % j == 0) {
+                    isPrime = false;
+                    break;
+                }
             }
+            primes[i] = isPrime;
         }
-        return true;
+        return primes;
     }
 }

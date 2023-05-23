@@ -31,18 +31,18 @@ public class Main {
 
     private static void search(int p, int q, int i) {
         boolean[][] visit;
-        for (int j = 0; j < p; j++) {
-            for (int k = 0; k < q; k++) {
+//        for (int j = 0; j < p; j++) {
+//            for (int k = 0; k < q; k++) {
                 visit = new boolean[p][q];
                 result = new String[p * q];
                 ok = false;
                 //遍历所有起点
-                dfs(j, k, visit, 0);
-                if (ok) {
-                    return;
-                }
-            }
-        }
+                dfs(0, 0, visit, 0);
+//                if (ok) {
+//                    return;
+//                }
+//            }
+//        }
     }
 
     private static void dfs(int p, int q, boolean[][] visit, int num) {
