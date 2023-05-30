@@ -34,15 +34,19 @@ public class Main {
                     }
                 }
             }
+            nums[startRow][startColum] = 0;
             dfs(startColum, startRow, endColumn, endRow, 0, nums);
-            //超过十次输了
-            System.out.println(movement > 10 ? -1 : movement);
+            System.out.println(movement);
 
         }
     }
 
 
     static void dfs(int startColumn, int startRow, int endColumn, int endRow, int step, int[][] nums) {
+        //超过十次输了
+        if (step > 10) {
+            return;
+        }
         if (startColumn == endColumn && startRow == endRow) {
             if (movement == -1) {
                 movement = step;
@@ -55,7 +59,6 @@ public class Main {
             return;
         }
         for (int i = 0; i < 4; i++) {
-            step++;
             MoveResult result = null;
             //0向上扔
             if (i == 0) {
@@ -73,15 +76,16 @@ public class Main {
             if (i == 3) {
                 result = right(nums, startRow, startColumn);
             }
+            if (null == result) continue;
             if (result.blockRow != -1 && result.blockColumn != -1) {
                 nums[result.blockRow][result.blockColumn] = 0;
             }
-            dfs(result.column, result.row, endColumn, endRow, step, nums);
+
+            dfs(result.column, result.row, endColumn, endRow, step + 1, nums);
             //还原撞碎的石头
             if (-1 != result.blockColumn && -1 != result.blockRow) {
                 nums[result.blockRow][result.blockColumn] = 1;
             }
-            step--;
         }
     }
 
@@ -91,11 +95,11 @@ public class Main {
 
     private static MoveResult up(int[][] nums, int row, int column) {
 
-        for (int i = row; i >= 0; i--) {
+        for (int i = row - 1; i >= 0; i--) {
             if (nums[i][column] == 1) {
                 //紧邻石头的方向不能移动
 
-                if (i == row - 1) return new MoveResult(-1, -1, -1, -1);
+                if (i == row - 1) return null;
 
                 return new MoveResult(i + 1, column, i, column);
             }
@@ -103,15 +107,15 @@ public class Main {
                 return new MoveResult(i, column, -1, -1);
             }
         }
-        return new MoveResult(-1, -1, -1, -1);
+        return null;
     }
 
     private static MoveResult down(int[][] nums, int row, int column) {
-        for (int i = row; i < nums.length; i++) {
+        for (int i = row + 1; i < nums.length; i++) {
             //紧邻石头的方向不能移动
 
             if (nums[i][column] == 1) {
-                if (i == row + 1) return new MoveResult(-1, -1, -1, -1);
+                if (i == row + 1) return null;
 
                 return new MoveResult(i - 1, column, i, column);
             }
@@ -119,30 +123,30 @@ public class Main {
                 return new MoveResult(i, column, -1, -1);
             }
         }
-        return new MoveResult(-1, -1, -1, -1);
+        return null;
     }
 
     private static MoveResult left(int[][] nums, int row, int column) {
-        for (int i = column; i >= 0; i--) {
+        for (int i = column - 1; i >= 0; i--) {
             if (nums[row][i] == 1) {
                 //紧邻石头的方向不能移动
 
-                if (i == column - 1) return new MoveResult(-1, -1, -1, -1);
+                if (i == column - 1) return null;
                 return new MoveResult(row, i + 1, row, i);
             }
             if (nums[row][i] == 3) {
                 return new MoveResult(row, i, -1, -1);
             }
         }
-        return new MoveResult(-1, -1, -1, -1);
+        return null;
     }
 
     private static MoveResult right(int[][] nums, int row, int column) {
-        for (int i = column; i < nums[0].length; i++) {
+        for (int i = column + 1; i < nums[0].length; i++) {
             if (nums[row][i] == 1) {
                 //紧邻石头的方向不能移动
 
-                if (i == column + 1) return new MoveResult(-1, -1, -1, -1);
+                if (i == column + 1) return null;
 
                 return new MoveResult(row, i - 1, row, i);
             }
@@ -150,7 +154,7 @@ public class Main {
                 return new MoveResult(row, i, -1, -1);
             }
         }
-        return new MoveResult(-1, -1, -1, -1);
+        return null;
     }
 
     static class MoveResult {
