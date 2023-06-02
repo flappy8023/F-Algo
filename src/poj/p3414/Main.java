@@ -11,8 +11,8 @@ import java.util.Scanner;
  */
 public class Main {
     static class OP {
-        //链表记录上次的操作
-        OP pre;
+        //        //记录之前的操作
+//        String pre = "";
         //操作描述 FILL(1)
         String operation;
         //i的当前水量
@@ -21,8 +21,7 @@ public class Main {
         int v2;
         int step;
 
-        public OP(OP pre, String operation, int v1, int v2, int step) {
-            this.pre = pre;
+        public OP(String operation, int v1, int v2, int step) {
             this.operation = operation;
             this.v1 = v1;
             this.v2 = v2;
@@ -35,6 +34,8 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
+
         int a = scanner.nextInt();
         int b = scanner.nextInt();
         int c = scanner.nextInt();
@@ -42,17 +43,8 @@ public class Main {
         if (null == lastOP) {
             System.out.println("impossible");
         } else {
-            String[] ops = new String[lastOP.step];
-            int index = 0;
             System.out.println(lastOP.step);
-            while (lastOP.pre != null) {
-                ops[index++] = lastOP.operation;
-                lastOP = lastOP.pre;
-            }
-
-            for (int i = ops.length - 1; i >= 0; i--) {
-                System.out.println(ops[i]);
-            }
+            System.out.printf(lastOP.operation);
         }
 
     }
@@ -61,10 +53,12 @@ public class Main {
         OP[] ops = new OP[100000];
         int head = 0;
         int tail = 0;
-        ops[tail++] = new OP(null, null, 0, 0, 0);
-        ;
+        boolean[][] visit = new boolean[a + 1][b + 1];
+        ops[tail++] = new OP("", 0, 0, 0);
+        visit[a][b] = true;
         while (head < tail) {
             OP op = ops[head++];
+            visit[op.v1][op.v2] = true;
             //缸1 或者缸2达到了要求，终止
             if (op.v1 == c || op.v2 == c) {
                 //记录最后一个操作
@@ -72,28 +66,30 @@ public class Main {
                 return;
             }
             //1.FILL(1)
-            if (op.v1 != a) {
-                ops[tail++] = new OP(op, "FILL(1)", a, op.v2, op.step + 1);
+            if (op.v1 < a && !visit[a][op.v2]) {
+                ops[tail++] = new OP(op.operation + "FILL(1)" + "\n", a, op.v2, op.step + 1);
             }
             //2.FILL(2)
-            if (op.v2 != b) {
-                ops[tail++] = new OP(op, "FILL(2)", op.v1, b, op.step + 1);
+            if (op.v2 < b && !visit[op.v1][b]) {
+                ops[tail++] = new OP(op.operation + "FILL(2)" + "\n", op.v1, b, op.step + 1);
             }
             //3.DROP(1)
-            if (op.v1 != 0) {
-                ops[tail++] = new OP(op, "DROP(1)", 0, op.v2, op.step + 1);
+            if (op.v1 > 0 && !visit[0][op.v2]) {
+                ops[tail++] = new OP(op.operation + "DROP(1)" + "\n", 0, op.v2, op.step + 1);
             }
             //4.DROP(2)
-            if (op.v2 != 0) {
-                ops[tail++] = new OP(op, "DROP(2)", op.v1, 0, op.step + 1);
+            if (op.v2 > 0 && !visit[op.v1][0]) {
+                ops[tail++] = new OP(op.operation + "DROP(2)" + "\n", op.v1, 0, op.step + 1);
             }
             //5.POUR(1,2)
-            if (op.v1 != 0) {
-                ops[tail++] = getPour12(op, b);
+            OP op12 = getPour12(op, b);
+            if (op.v1 > 0 && op.v2 < b && !visit[op12.v1][op12.v2]) {
+                ops[tail++] = op12;
             }
             //6.POUR(2,1)
-            if (op.v2 != 0) {
-                ops[tail++] = getPour21(op, a);
+            OP op21 = getPour21(op, a);
+            if (op.v2 > 0 && op.v1 < a && !visit[op21.v1][op21.v2]) {
+                ops[tail++] = op21;
             }
         }
     }
@@ -102,21 +98,20 @@ public class Main {
         int bNeed = b - pre.v2;
         //缸1的水足够填满缸2
         if (pre.v1 >= bNeed) {
-            return new OP(pre, "POUR(1,2)", pre.v1 - bNeed, b, pre.step + 1);
+            return new OP(pre.operation + "POUR(1,2)" + "\n", pre.v1 - bNeed, b, pre.step + 1);
         }
         //缸1的水不够填满缸2
         else {
-            return new OP(pre
-                    , "POUR(1,2)", 0, pre.v2 + pre.v1, pre.step + 1);
+            return new OP(pre.operation + "POUR(1,2)" + "\n", 0, pre.v2 + pre.v1, pre.step + 1);
         }
     }
 
     private static OP getPour21(OP pre, int a) {
         int aNeed = a - pre.v1;
         if (pre.v2 >= aNeed) {
-            return new OP(pre, "POUR(2,1)", a, pre.v2 - aNeed, pre.step + 1);
+            return new OP(pre.operation + "POUR(2,1)" + "\n", a, pre.v2 - aNeed, pre.step + 1);
         } else {
-            return new OP(pre, "POUR(2,1)", pre.v1 + pre.v2, 0, pre.step + 1);
+            return new OP(pre.operation + "POUR(2,1)" + "\n", pre.v1 + pre.v2, 0, pre.step + 1);
         }
     }
 }
