@@ -53,10 +53,9 @@ public class Solution {
     //方法二：以[left，right)左开右闭区间进行二分查找
     public int search2(int[] nums, int target) {
         int left = 0;
-        int right = nums.length - 1;
-        int mid = 0;
+        int right = nums.length;
         while (left < right) {
-            mid = (left + right) / 2;
+            int mid = (left + right) / 2;
             //在右区间，一定不是mid
             if (nums[mid] < target) {
                 left = mid + 1;
