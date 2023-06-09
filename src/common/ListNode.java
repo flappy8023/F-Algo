@@ -8,6 +8,13 @@ public  class ListNode {
         val = x;
         next = null;
     }
+    public ListNode(){
+
+    }
+    public ListNode(int x,ListNode n){
+        val = x;
+        next = n;
+    }
 
     @Override
     public String toString() {
