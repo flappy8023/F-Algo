@@ -40,10 +40,28 @@ import java.util.List;
 class Solution {
     private List<List<String>> result = new ArrayList<>();
     private List<String> subList = new ArrayList<>();
+    private boolean[][] dp;
 
     public List<List<String>> partition(String s) {
+        initDP(s);
         backtracking(s, 0);
         return result;
+    }
+
+    private void initDP(String s) {
+        dp = new boolean[s.length()][s.length()];
+        //dp[i][j] = s.charAt(i)==s.charAt(j)&&dp[i+1][j-1]
+        for (int i = s.length() - 1; i >= 0; i--) {
+            for (int j = i; j < s.length(); j++) {
+                if (i == j) {
+                    dp[i][j] = true;
+                } else if (j - i == 1) {
+                    dp[i][j] = s.charAt(i) == s.charAt(j);
+                } else {
+                    dp[i][j] = s.charAt(i) == s.charAt(j) && dp[i + 1][j - 1];
+                }
+            }
+        }
     }
 
     private void backtracking(String s, int startIndex) {
@@ -53,7 +71,7 @@ class Solution {
         }
         for (int i = startIndex; i < s.length(); i++) {
             String sub = s.substring(startIndex, i + 1);
-            if (isHW(sub)) {
+            if (dp[startIndex][i]) {
                 subList.add(sub);
             } else {
                 continue;

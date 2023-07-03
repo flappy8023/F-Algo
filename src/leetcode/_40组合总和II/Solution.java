@@ -1,4 +1,4 @@
-package leetcode._40组合总和;
+package leetcode._40组合总和II;
 
 /**
  * @author luweiming
