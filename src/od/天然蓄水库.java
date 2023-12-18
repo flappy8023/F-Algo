@@ -19,7 +19,7 @@ public class 天然蓄水库 {
     }
 
 
-    private static int calcuVolume(Integer[] nums,int left,int right){
-
-    }
+//    private static int calcuVolume(Integer[] nums,int left,int right){
+//
+//    }
 }
