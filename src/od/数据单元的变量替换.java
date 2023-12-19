@@ -62,13 +62,16 @@ public class 数据单元的变量替换 {
                 while (left != -1 || right != -1) {
                     if (left == -1 || right == -1 || left > right) {
                         System.out.println("-1");
-                        break;
+                        return;
+                    } else if (right - left > 2) {//<>中间不止一个字符
+                        System.out.println("-1");
+                        return;
                     } else {
                         char reference = value.charAt(left + 1);
-                        //引用不存在的单元格 报错
-                        if (!letterReferences.containsKey(reference)) {
+                        //引用不存在的单元格  、自引用报错
+                        if (!letterReferences.containsKey(reference)||key==reference) {
                             System.out.println("-1");
-                            break;
+                            return;
                         }
                         value = value.substring(0, left) + letterReferences.get(reference) + value.substring(right + 1);
                         left = value.indexOf("<");
